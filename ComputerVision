@@ -1,0 +1,40 @@
+import processing.video.*;
+  Capture cam;
+  PImage img, trial;
+  
+void setup()
+{
+  String[] cameras = Capture.list();
+  size(640, 480);
+  cam = new Capture(this, cameras[0]);
+  cam.start();
+ 
+}
+void draw()
+{
+   trial = cam;
+  loadPixels();
+  trial.loadPixels();
+ 
+  int loc = 0;
+  if (cam.available() == true)
+  {
+    cam.read();
+  }
+  float r;
+  float g;
+  float b;
+     for (int y = 0; y < trial.height; y++) {
+     for (int x = 0; x < trial.width; x++) {
+        loc = x + y*trial.width;
+        r = red(trial.pixels[loc]);
+        g = green(trial.pixels[loc]);
+        b = blue(trial.pixels[loc]);
+        pixels[loc] =  color(255 - r, 255 - g, 255 - b);
+     }
+  
+        //
+       updatePixels();
+   }
+ 
+}
